@@ -10,11 +10,17 @@ class HomeScreen extends ViewModelBuilderWidget<HomeVuModel> {
   Widget builder(BuildContext context, HomeVuModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
-      body: Center(
-        child: ElevatedButton(onPressed: (){
-          viewModel.onOpenNativeActivity();
-          debugPrint("button pressed");
-        }, child: const Text("Go To Android"),),
+      body: Form(
+        child: Column(
+          children: [
+            TextFormField(
+              controller: viewModel.controller,
+            ),
+            ElevatedButton(onPressed: (){
+              viewModel.onOpenNativeActivity();
+            }, child: const Text("Go To Android Native"),),
+          ],
+        ),
       ),
     );
   }
