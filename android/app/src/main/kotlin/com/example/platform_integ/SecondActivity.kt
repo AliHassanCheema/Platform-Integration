@@ -1,5 +1,6 @@
 package com.example.platform_integ
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,11 @@ class SecondActivity : AppCompatActivity() {
         num  = intent.getIntExtra("sendingNum", num)
         binding.txt.text = num.toString()
         onIncrement()
+        binding.backBtn.setOnClickListener {
+            intent.putExtra("num", num)
+            setResult(RESULT_OK, intent)
+            onBackPressed()
+        }
     }
 
     private fun onIncrement(){

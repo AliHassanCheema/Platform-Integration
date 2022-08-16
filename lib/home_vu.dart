@@ -14,6 +14,7 @@ class HomeScreen extends ViewModelBuilderWidget<HomeVuModel> {
       body: Form(
         child: Column(
           children: [
+            Text(viewModel.n.toString()),
             TextFormField(
               keyboardType: TextInputType.phone,
               inputFormatters: <TextInputFormatter>[
