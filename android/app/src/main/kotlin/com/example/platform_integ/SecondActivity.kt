@@ -19,8 +19,8 @@ class SecondActivity : AppCompatActivity() {
 
     private fun onIncrement(){
         binding.addBtn.setOnClickListener {
-            binding.txt.text = num.toString()
             num++
+            binding.txt.text = num.toString()
         }
     }
 }

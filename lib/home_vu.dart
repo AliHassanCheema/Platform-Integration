@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:platform_integ/home_vm.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,6 +15,10 @@ class HomeScreen extends ViewModelBuilderWidget<HomeVuModel> {
         child: Column(
           children: [
             TextFormField(
+              keyboardType: TextInputType.phone,
+              inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+              ],
               controller: viewModel.controller,
             ),
             ElevatedButton(onPressed: (){
