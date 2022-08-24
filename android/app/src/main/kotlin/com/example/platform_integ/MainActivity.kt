@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.plugins.util.GeneratedPluginRegister
@@ -13,12 +14,14 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 
 class MainActivity: FlutterActivity() {
     private  val CHANNEL = "com.example.platform_integ/channels"
-    private var n : Int = 0
+    private var numb : Int = 0
+    private lateinit var methodChannel: MethodChannel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         GeneratedPluginRegister.registerGeneratedPlugins(FlutterEngine(this@MainActivity))
-        MethodChannel(flutterEngine?.dartExecutor!!, CHANNEL).setMethodCallHandler{ call, _ ->
+        methodChannel = MethodChannel(flutterEngine?.dartExecutor!!, CHANNEL)
+        methodChannel.setMethodCallHandler{ call, result ->
 
             if(call.method.equals("goToSecondScreen") ){
                 var intent = Intent(this@MainActivity, SecondActivity::class.java)
@@ -31,11 +34,16 @@ class MainActivity: FlutterActivity() {
 
 
 
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1) {
-            n = data!!.getIntExtra("num", 0)
-            Log.e("TAG", "onActivityResult: $n", )
+            numb = data!!.getIntExtra("num", 0)
+            methodChannel.setMethodCallHandler { call, result ->
+                result.success(numb)
+            }
+            Log.e("TAG", "onActivityResult: $numb", )
         }
     }
 }
