@@ -15,14 +15,13 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 class MainActivity: FlutterActivity() {
     private  val CHANNEL = "com.example.platform_integ/channels"
     private var numb : Int = 0
-    private lateinit var methodChannel: MethodChannel
+    var methodChannelResult: MethodChannel.Result? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         GeneratedPluginRegister.registerGeneratedPlugins(FlutterEngine(this@MainActivity))
-        methodChannel = MethodChannel(flutterEngine?.dartExecutor!!, CHANNEL)
-        methodChannel.setMethodCallHandler{ call, result ->
-
+            MethodChannel(flutterEngine?.dartExecutor!!, CHANNEL).setMethodCallHandler{ call, result ->
+            methodChannelResult =result;
             if(call.method.equals("goToSecondScreen") ){
                 var intent = Intent(this@MainActivity, SecondActivity::class.java)
                 var numb = call.argument<Int>("number");
@@ -40,10 +39,8 @@ class MainActivity: FlutterActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1) {
             numb = data!!.getIntExtra("num", 0)
-            methodChannel.setMethodCallHandler { call, result ->
-                result.success(numb)
-            }
-            Log.e("TAG", "onActivityResult: $numb", )
+            methodChannelResult?.success(numb)
+            Log.e("TAG", "onBackFrom2ndToMAinActivity: $numb", )
         }
     }
 }

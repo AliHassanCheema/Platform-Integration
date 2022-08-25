@@ -22,8 +22,9 @@ class HomeScreen extends ViewModelBuilderWidget<HomeVuModel> {
               ],
               controller: viewModel.controller,
             ),
-            ElevatedButton(onPressed: (){
-              viewModel.onOpenNativeActivity();
+            ElevatedButton(onPressed: ()
+            async{
+              await viewModel.onOpenNativeActivity();
             }, child: const Text("Go To Android Native"),),
           ],
         ),
