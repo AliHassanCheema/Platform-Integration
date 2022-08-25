@@ -17,9 +17,11 @@ class HomeVuModel extends BaseViewModel{
    onOpenNativeActivity() async {
      debugPrint("Not invoked yet");
       n = int.parse(controller!.value.text);
-     result = await platform.invokeMethod("goToSecondScreen" , {"number": n});
-     n=result;
+      if(n !=null){
+        result = await platform.invokeMethod("goToSecondScreen" , {"number": n});
+        n=result;
      controller!.clear();
+      }
      notifyListeners();
      debugPrint("invokedddddddddddd   Value $n");
    }
